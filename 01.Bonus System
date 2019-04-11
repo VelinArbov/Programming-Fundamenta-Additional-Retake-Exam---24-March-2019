@@ -1,0 +1,29 @@
+using System;
+
+namespace Bonus_system
+{
+    class Program
+    {//{totalBoonus} = {studentAttendances} / {courseLectures} * (5 + {additionalBonus})
+        static void Main(string[] args)
+        {
+            double totalBonus = 0.0;
+            double maxBonus = 0;
+            var lecturs = 0;
+            var countOfStudents = double.Parse(Console.ReadLine());
+            var countOfLectures = double.Parse(Console.ReadLine());
+            var initialBonus = double.Parse(Console.ReadLine());
+            for (int i = 0; i < countOfStudents; i++)
+            {
+                int attendesOfEachStudent = int.Parse(Console.ReadLine());
+              totalBonus  = (attendesOfEachStudent / countOfLectures) * (5 + (initialBonus));
+               
+                if ( Math.Ceiling( totalBonus) > maxBonus)
+                {
+                    maxBonus = totalBonus;
+                    lecturs = attendesOfEachStudent;
+                }
+            }
+            Console.WriteLine($"The maximum bonus score for this course is { Math.Ceiling( maxBonus)}.The student has attended { lecturs} lectures.");
+        }
+    }
+}
