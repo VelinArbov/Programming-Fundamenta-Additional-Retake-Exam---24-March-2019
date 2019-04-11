@@ -1,0 +1,88 @@
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace International_SoftUniada
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            
+            Dictionary<string, HashSet<string>> contyWithNames = new Dictionary<string, HashSet<string>>();
+            Dictionary<string, int> contryWithPoints = new Dictionary<string, int>();
+            Dictionary<string, int> nameWithPoints = new Dictionary<string, int>();
+            while (true)
+            {
+
+              
+                List<string> input = Console.ReadLine().Split(" -> ").ToList();
+                if ( input.Contains("END"))
+                {
+                    break;
+                }
+                string country = input[0];
+                string name = input[1];
+                int points = int.Parse(input[2]);
+                if (!contyWithNames.ContainsKey(country))
+                {
+                    contyWithNames[country] = new HashSet<string>();
+                    contyWithNames[country].Add(name);
+                    contryWithPoints[country] = points;
+                    nameWithPoints[name] = points;
+
+                }
+                else if (contyWithNames.ContainsKey(country) && !contyWithNames[country].Contains(name))
+                {
+                    nameWithPoints[name] = points;
+                    contyWithNames[country].Add(name);
+                    contryWithPoints[country] += points;
+
+                }
+                else
+                {
+                    contryWithPoints[country] += points;
+                    nameWithPoints[name] += points;
+                    
+                }
+
+
+
+
+
+
+
+
+            }
+            foreach (var item in contryWithPoints.OrderByDescending(x=> x.Value))
+            {
+
+
+                string currentCountry = item.Key;
+                Console.WriteLine($"{item.Key.TrimEnd()}: {item.Value}");
+                foreach (var names in contyWithNames[currentCountry])
+                {
+                    Console.WriteLine($" -- {names} -> {nameWithPoints[names]}");
+                }
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+         
+    }
+}
