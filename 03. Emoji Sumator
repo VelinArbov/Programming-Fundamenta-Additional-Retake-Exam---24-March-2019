@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+namespace Emoji_SImulator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int countMultiply = 1;
+            int totalSum = 0;
+            List<string> emoji = new List<string>();
+            string input = Console.ReadLine();
+            string newString = string.Empty;
+            List<int> numbers = Console.ReadLine().Split(':').Select(int.Parse).ToList();
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                char chars = (char)numbers[i];
+                newString += chars;
+
+            }
+
+            var Regexpattern = new Regex(@"(?<=\s|^):(?<validWord>[a-z]{4,}):(?=[,.!?\s]|$)");
+            MatchCollection words = Regexpattern.Matches(input);
+            if (words.Count == 0)
+            {
+                Console.WriteLine("Total Emoji Power: 0");
+                return;
+            }
+            else
+            {
+                foreach (Match item in words)
+                {
+                    string currentWord = item.Groups["validWord"].Value.ToString();
+                    emoji.Add(item.ToString());
+
+                    //currentWord = currentWord.Substring(1, currentWord.Length - 2);
+
+                    for (int i = 0; i < currentWord.Length; i++)
+                    {
+                        char currentChar = currentWord[i];
+
+                        int numberchar = (int)currentChar;
+
+
+                        totalSum += numberchar;
+
+                    }
+                    if (emoji.Contains($":{newString}:"))
+                    {
+                        countMultiply = 2;
+                    }
+
+                }
+                Console.Write($"Emojis found: {string.Join(", ", emoji)}");
+                Console.WriteLine();
+                Console.WriteLine($"Total Emoji Power: {totalSum * countMultiply}");
+            }
+
+
+        }
+    }
+}
