@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Nascar
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<string> pilots = Console.ReadLine().Split().ToList();
+            while (true)
+            {
+                string input = Console.ReadLine();
+                if ( input.Contains("end"))
+                {
+                    break;
+                }
+                string[] tokens = input.Split();
+                string command = tokens[0];
+                if ( command == "Box")
+                {
+                    string nameOfpilot = tokens[1];
+                    if (pilots.Contains(nameOfpilot) && pilots[pilots.Count-1] != nameOfpilot)
+                    {
+                        int indexOfPilot = pilots.IndexOf(nameOfpilot);
+                        pilots.Remove(nameOfpilot);
+                        pilots.Insert(indexOfPilot + 1, nameOfpilot);
+                    }
+                }
+                else if ( command == "Race")
+                {
+                    string nameOfpilot = tokens[1];
+                    if ( !pilots.Contains(nameOfpilot))
+                    {
+                        pilots.Remove(nameOfpilot);
+                        pilots.Insert(pilots.Count, nameOfpilot);
+                    }
+
+
+                }
+                else if ( command == "Accident")
+                {
+                    pilots.Remove(tokens[1]);
+                }
+                else if (command == "Overtake")
+                {
+                    string nameofPilot = tokens[1];
+                    int positionForword = int.Parse(tokens[2]);
+                    if (pilots.Contains(nameofPilot) )
+                    {
+                       int currentPosiotion= pilots.IndexOf(nameofPilot);
+                        if ( currentPosiotion-positionForword >= 0)
+                        {
+                            pilots.Remove(nameofPilot);
+                            pilots.Insert(currentPosiotion - positionForword, nameofPilot);
+
+
+
+                        }
+
+
+                    }
+                }
+            }
+            Console.Write(string.Join(" ~ ",pilots));
+            Console.WriteLine();
+        }
+    }
+}
